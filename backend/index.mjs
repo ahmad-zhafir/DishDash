@@ -13,6 +13,12 @@ const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
 app.use(cors());
 app.use(bodyParser.json());
 
+
+app.get("/", (req, res) => {
+  res.send("Server is running. Use /generate-recipe or /recognize-image endpoints.");
+});
+
+
 // Set up file upload
 const upload = multer({ dest: "uploads/" });
 

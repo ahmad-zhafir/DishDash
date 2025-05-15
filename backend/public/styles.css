@@ -183,3 +183,36 @@ footer{
   object-fit: cover;
   border: 2px solid #ddd;
 }
+
+
+@media (max-width: 768px) {
+  form {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .instructions {
+    width: 100%;
+    font-size: 16px;
+  }
+
+  .submit-button {
+    width: 100%;
+    margin-top: 10px;
+    padding: 16px;
+    font-size: 18px;
+    justify-content: center;
+  }
+
+  .camera-icon-label {
+    width: 100%;
+    margin-top: 10px;
+    padding: 16px;
+    font-size: 18px;
+    justify-content: center;
+  }
+
+  .form-container {
+    padding: 20px 16px;
+  }
+}

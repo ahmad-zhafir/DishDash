@@ -31,11 +31,11 @@ a{
     max-width: 600px;
 }
 
-form{
-    display: flex;
-    
-  align-items: center;
+form {
+  display: flex;
+  flex-wrap: wrap; /* Allow wrapping */
   gap: 10px;
+  width: 100%; /* Make sure it doesn't overflow */
 }
 
 .form-container{
@@ -49,11 +49,12 @@ form{
 .instructions{
     padding: 16px;
     border: 1px solid rgba(39, 33, 66, 0.5);
-    width: 80%;
     font-size: 16px;
     border-radius: 50px;
     line-height: 20px;
     color: #272044;
+      width: 100%; /* Full width */
+  box-sizing: border-box; /* Prevent padding from breaking layout */
 }
 .hint{
     line-height: 1.5;
@@ -145,10 +146,17 @@ footer{
   align-items: center;
   justify-content: center;
   cursor: pointer;
+  width: 100%; /* Full width on mobile */
+  box-sizing: border-box;
 }
 
 .camera-icon-label {
-  width: 20px;
+  width: 60px;
+  gap: 8px;
+}
+
+.camera-icon-label span {
+  display: none; /* hide text by default */
 }
 
 .camera-icon-label:hover {
@@ -186,6 +194,13 @@ footer{
 
 
 @media (max-width: 768px) {
+  
+  body {
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+
+
   form {
     flex-direction: column;
     align-items: stretch;
@@ -210,6 +225,10 @@ footer{
     padding: 16px;
     font-size: 18px;
     justify-content: center;
+  }
+
+  .camera-icon-label span {
+    display: inline; /* show text on mobile */
   }
 
   .form-container {

@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>AI Recipe Generator</title>
+    <title>DishDash | AI Recipe Generator</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Urbanist:ital,wght@0,100..900;1,100..900&display=swap"
@@ -19,7 +19,7 @@
 <body>
     <div class="container">
         <header>
-            <h1>AI Recipe Generator</h1>
+            <h1>DishDash AI Recipe Generator</h1>
         </header>
         <main>
             <div class="form-container">
@@ -27,7 +27,9 @@
                     <input type="text" placeholder="What ingredients do you have?" autofocus autocomplete="off"
                         class="instructions" id="user-instructions" name="ingredients"/>
 
-                    <label for="image-input" class="camera-icon-label"> <i class="fa-solid fa-camera"></i></label>
+                    <label for="image-input" class="camera-icon-label">
+  <i class="fa-solid fa-camera"></i> <span>Upload Image</span>
+</label>
                     <input type="file" id="image-input" accept="image/*" capture="environment" multiple hidden name="images" />
 
 

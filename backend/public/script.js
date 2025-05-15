@@ -117,6 +117,7 @@ function generateRecipe(event) {
         const prompt = `Generate a recipe with these ingredients: ${extractedIngredients}`;
         const context = `You are an expert chef and HTML writer. Return the recipe in raw HTML only — without using code blocks like \`\`\`html and dont use '&' to say and. 
           Start with the recipe title as a heading. Then provide a list of ingredients and step-by-step instructions.
+          Keep the instruction clear, simple and begineer friendly. Also include some nutritions fact. 
           Use cups, grams (g), tbsp, tsp, etc. Avoid lbs or oz. End with: <strong>Bon Appetit! Enjoy your meals!</strong>`;
 
         return axios.post("https://dishdash-m977.onrender.com/generate-recipe", { prompt, context });
@@ -128,8 +129,9 @@ function generateRecipe(event) {
       });
   } else if (hasText) {
     const prompt = `User instructions are: Generate a recipe with these ingredients ${instructions}`;
-    const context = `You are an expert chef and HTML writer. Return the recipe in raw HTML only — without using code blocks like \`\`\`html. 
+    const context = `You are an expert chef and HTML writer. Return the recipe in raw HTML only — without using code blocks like \`\`\`html and dont use '&' to say and. 
       Start with the recipe title as a heading. Then provide a list of ingredients and step-by-step instructions.
+      Keep the instruction clear, simple and begineer friendly. Also include some nutritions fact. 
       Use cups, grams (g), tbsp, tsp, etc. Avoid lbs or oz. End with: <strong>Bon Appetit! Enjoy your meals!</strong>`;
 
     axios

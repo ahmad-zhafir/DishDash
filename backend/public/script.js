@@ -86,7 +86,7 @@ function recognizeIngredientsFromImage(files) {
   });
 
   return axios
-    .post("http://localhost:3001/recognize-image", formData, {
+    .post("https://dishdash-m977.onrender.com/recognize-image", formData, {
       headers: { "Content-Type": "multipart/form-data" },
     })
     .then((response) => response.data.labels);
@@ -119,7 +119,7 @@ function generateRecipe(event) {
           Start with the recipe title as a heading. Then provide a list of ingredients and step-by-step instructions.
           Use cups, grams (g), tbsp, tsp, etc. Avoid lbs or oz. End with: <strong>Bon Appetit! Enjoy your meals!</strong>`;
 
-        return axios.post("http://localhost:3001/generate-recipe", { prompt, context });
+        return axios.post("https://dishdash-m977.onrender.com/generate-recipe", { prompt, context });
       })
       .then(displayRecipe)
       .catch((error) => {
@@ -133,7 +133,7 @@ function generateRecipe(event) {
       Use cups, grams (g), tbsp, tsp, etc. Avoid lbs or oz. End with: <strong>Bon Appetit! Enjoy your meals!</strong>`;
 
     axios
-      .post("http://localhost:3001/generate-recipe", { prompt, context })
+      .post("https://dishdash-m977.onrender.com/generate-recipe", { prompt, context })
       .then(displayRecipe)
       .catch((error) => {
         console.error("Text-based recipe generation failed:", error);

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AI Recipe Generator</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Urbanist:ital,wght@0,100..900;1,100..900&display=swap"
+        rel="stylesheet" />
+    <script src="https://unpkg.com/typewriter-effect@latest/dist/core.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios@1.6.7/dist/axios.min.js"></script>
+    <script src="https://unpkg.com/axios@1.6.7/dist/axios.min.js"></script>
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <h1>AI Recipe Generator</h1>
+        </header>
+        <main>
+            <div class="form-container">
+                <form id="recipe-generator-form" enctype="multipart/form-data">
+                    <input type="text" placeholder="What ingredients do you have?" autofocus autocomplete="off"
+                        class="instructions" id="user-instructions" name="ingredients"/>
+
+                    <label for="image-input" class="camera-icon-label"> <i class="fa-solid fa-camera"></i></label>
+                    <input type="file" id="image-input" accept="image/*" capture="environment" multiple hidden name="images" />
+
+
+                    <input type="submit" class="submit-button" value="Generate Recipe" />
+                </form>
+                <div class="preview-container hidden" id="preview-container"></div>
+            </div>
+
+            <div class="recipe hidden" id="recipe"></div>
+        </main>
+    </div>
+    <script src="script.js"></script>
+</body>
+
+</html>

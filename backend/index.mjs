@@ -5,19 +5,26 @@ import multer from "multer";
 import fs from "fs";
 import vision from "@google-cloud/vision";
 import fetch from "node-fetch";
+import path from "path";
+import { fileURLToPath } from "url";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const app = express();
-const port = 3001;
+const port = process.env.PORT || 3001;
 const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
 
 app.use(cors());
 app.use(bodyParser.json());
 
+// Serve frontend static files from 'public' folder
+app.use(express.static(path.join(__dirname, "public")));
 
+// Route for homepage - serve index.html
 app.get("/", (req, res) => {
-  res.send("Server is running. Use /generate-recipe or /recognize-image endpoints.");
+  res.sendFile(path.join(__dirname, "public", "index.html"));
 });
-
 
 // Set up file upload
 const upload = multer({ dest: "uploads/" });
@@ -60,7 +67,6 @@ app.post("/recognize-image", upload.array("images"), async (req, res) => {
     const allLabels = [];
     console.log("Image files received:", req.files);
 
-
     for (const file of req.files) {
       console.log("Start process image");
       const [result] = await client.labelDetection(file.path);
@@ -69,7 +75,7 @@ app.post("/recognize-image", upload.array("images"), async (req, res) => {
       fs.unlinkSync(file.path); // Clean up uploaded file
     }
 
-     console.log("Extracted labels from image:", allLabels);
+    console.log("Extracted labels from image:", allLabels);
 
     // Optionally deduplicate ingredients
     const uniqueLabels = [...new Set(allLabels)];
@@ -81,7 +87,6 @@ app.post("/recognize-image", upload.array("images"), async (req, res) => {
   }
 });
 
-
 app.listen(port, () => {
-  console.log(`🚀 Server running at http://localhost:${port}`);
+  console.log(`🚀 Server running on port ${port}`);
 });

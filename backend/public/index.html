@@ -7,8 +7,7 @@
     <title>DishDash | AI Recipe Generator</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Urbanist:ital,wght@0,100..900;1,100..900&display=swap"
-        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet" />
     <script src="https://unpkg.com/typewriter-effect@latest/dist/core.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios@1.6.7/dist/axios.min.js"></script>
     <script src="https://unpkg.com/axios@1.6.7/dist/axios.min.js"></script>
@@ -17,30 +16,33 @@
 </head>
 
 <body>
+    <div class="bg-layer"></div>
     <div class="container">
-        <header>
-            <h1>DishDash AI Recipe Generator</h1>
-        </header>
         <main>
             <div class="form-container">
+                <img src="logo.png" alt="DishDash Logo" class="site-logo">
+                <header>
+                    <h1>Your Personal AI Recipe Generator</h1>
+                    <p>Simply type some ingredients you have on hand or upload the picture and DishDash's AI will
+                        instantly generate an all-new recipe on demand</p>
+                </header>
                 <form id="recipe-generator-form" enctype="multipart/form-data">
                     <input type="text" placeholder="What ingredients do you have?" autofocus autocomplete="off"
                         class="instructions" id="user-instructions" name="ingredients" />
-
                     <label for="image-input" class="camera-icon-label">
                         <i class="fa-solid fa-camera"></i> <span>Upload Image</span>
                     </label>
                     <input type="file" id="image-input" accept="image/*" multiple hidden name="images" />
-
-
-                    <input type="submit" class="submit-button" value="Generate Recipe" />
+                    <button type="submit" class="submit-button">Generate Recipe</button>
                 </form>
                 <div class="preview-container hidden" id="preview-container"></div>
             </div>
-
             <div class="recipe hidden" id="recipe"></div>
         </main>
     </div>
+    <footer>
+        <p class="footer-text"><i>Made with ❤️ by DishDash Team · 2025</i></p>
+    </footer>
     <script src="script.js"></script>
 </body>
 

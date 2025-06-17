@@ -70,6 +70,12 @@ imageInput.addEventListener("change", () => {
 function displayRecipe(response) {
   console.log("recipe generated");
   const recipeText = response.data.candidates?.[0]?.content?.parts?.[0]?.text;
+  
+  // Remove code block markers if present
+  if (recipeText.startsWith("```")) {
+    recipeText = recipeText.replace(/^```[a-z]*\n/, "").replace(/```$/, "");
+  }
+  
   new Typewriter("#recipe", {
     strings: recipeText || "⚠️ No recipe found.",
     autoStart: true,

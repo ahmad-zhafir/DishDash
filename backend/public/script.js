@@ -98,6 +98,17 @@ function recognizeIngredientsFromImage(files) {
     .then((response) => response.data.labels);
 }
 
+function isFoodLabels(labels) {
+  const prompt = `These are labels detected from an image: ${labels.join(", ")}. Are these related to food items? Respond only with true or false.`;
+
+  return axios
+    .post("https://dishdash-m977.onrender.com/check-if-food", { prompt })
+    .then((response) => {
+      const text = response.data.candidates?.[0]?.content?.parts?.[0]?.text?.trim().toLowerCase();
+      return text === "true";
+    });
+}
+
 function generateRecipe(event) {
   event.preventDefault();
 
@@ -117,23 +128,33 @@ function generateRecipe(event) {
 
   if (hasImage) {
     recognizeIngredientsFromImage(window.allFiles)
-      .then((labels) => {
-        console.log("Recognized labels:", labels);
-        const extractedIngredients = labels.join(", ");
-        const prompt = `Generate a recipe with these ingredients: ${extractedIngredients}`;
-        const context = `You are an expert chef and HTML writer. Return the recipe in raw HTML only — without using code blocks like \`\`\`html and dont use '&' to say and. 
-          Do not use & or &amp; , write out the word "and" instead. 
-          Start with the recipe title as a heading. Then provide a list of ingredients and step-by-step instructions.
-          Keep the instruction clear, simple and begineer friendly. Also include some nutritions fact. 
-          Use cups, grams (g), tbsp, tsp, etc. Avoid lbs or oz. End with: <strong>Bon Appetit! Enjoy your meals!</strong>`;
+  .then((labels) => {
+    console.log("Recognized labels:", labels);
+    return isFoodLabels(labels).then((isFood) => {
+      if (!isFood) {
+        recipeElement.innerHTML = "🚫 This image does not appear to contain food.";
+        throw new Error("Non-food image detected.");
+      }
 
-        return axios.post("https://dishdash-m977.onrender.com/generate-recipe", { prompt, context });
-      })
-      .then(displayRecipe)
-      .catch((error) => {
-        console.error("Image-based recipe generation failed:", error);
-        recipeElement.innerHTML = "❌ Failed to process image. Try again.";
-      });
+      const extractedIngredients = labels.join(", ");
+      const prompt = `Generate a recipe with these ingredients: ${extractedIngredients}`;
+      const context = `You are an expert chef and HTML writer. Return the recipe in raw HTML only — without using code blocks like \`\`\`html and dont use '&' to say and. 
+        Do not use & or &amp; , write out the word "and" instead. 
+        Start with the recipe title as a heading. Then provide a list of ingredients and step-by-step instructions.
+        Keep the instruction clear, simple and begineer friendly. Also include some nutritions fact. 
+        Use cups, grams (g), tbsp, tsp, etc. Avoid lbs or oz. End with: <strong>Bon Appetit! Enjoy your meals!</strong>`;
+
+      return axios.post("https://dishdash-m977.onrender.com/generate-recipe", { prompt, context });
+    });
+  })
+  .then(displayRecipe)
+  .catch((error) => {
+    console.error("Image-based recipe generation failed:", error);
+    if (!error.message.includes("Non-food")) {
+      recipeElement.innerHTML = "❌ Failed to process image. Try again.";
+    }
+  });
+
   } else if (hasText) {
     const prompt = `User instructions are: Generate a recipe with these ingredients ${instructions}`;
     const context = `You are an expert chef and HTML writer. Return the recipe in raw HTML only — without using code blocks like \`\`\`html and dont use '&' to say and.

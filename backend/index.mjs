@@ -90,3 +90,30 @@ app.post("/recognize-image", upload.array("images"), async (req, res) => {
 app.listen(port, () => {
   console.log(`🚀 Server running on port ${port}`);
 });
+
+
+// Route to check if labels are food-related using Gemini
+app.post("/check-if-food", async (req, res) => {
+  const { prompt } = req.body;
+
+  try {
+    const response = await fetch(
+      `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${GEMINI_API_KEY}`,
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          contents: [{ parts: [{ text: prompt }] }],
+        }),
+      }
+    );
+
+    const data = await response.json();
+
+    // Return Gemini's full response (your frontend will extract true/false)
+    res.json(data);
+  } catch (error) {
+    console.error("Error calling Gemini for food check:", error);
+    res.status(500).json({ error: "Failed to check food label" });
+  }
+});
